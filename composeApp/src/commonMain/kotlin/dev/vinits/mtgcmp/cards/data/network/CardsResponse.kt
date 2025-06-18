@@ -1,7 +1,6 @@
 package dev.vinits.mtgcmp.cards.data.network
 
 import dev.vinits.mtgcmp.cards.domain.model.Card
-import dev.vinits.mtgcmp.cards.domain.model.Ruling
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -9,114 +8,54 @@ import kotlinx.serialization.Serializable
 data class CardsResponse(
     @SerialName("cards")
     val cards: List<CardResponse>
-)
+) {
+    @Serializable
+    data class CardResponse(
+        @SerialName("id")
+        val id: String? = null,
 
-@Serializable
-data class CardResponse(
-    @SerialName("id")
-    val id: String? = null,
+        @SerialName("name")
+        val name: String,
 
-    @SerialName("name")
-    val name: String,
+        @SerialName("manaCost")
+        val manaCost: String,
 
-    @SerialName("names")
-    val names: List<String>? = null,
+        @SerialName("type")
+        val type: String,
 
-    @SerialName("manaCost")
-    val manaCost: String,
+        @SerialName("rarity")
+        val rarity: String,
 
-    @SerialName("cmc")
-    val cmc: Float? = null,
+        @SerialName("set")
+        val set: String,
 
-    @SerialName("colors")
-    val colors: List<String>? = null,
+        @SerialName("text")
+        val text: String? = null,
 
-    @SerialName("colorIdentity")
-    val colorIdentity: List<String>? = null,
+        @SerialName("number")
+        val number: String? = null,
 
-    @SerialName("type")
-    val type: String,
+        @SerialName("power")
+        val power: String? = null,
 
-    @SerialName("supertypes")
-    val superTypes: List<String>? = null,
+        @SerialName("toughness")
+        val toughness: String? = null,
 
-    @SerialName("types")
-    val types: List<String>,
-
-    @SerialName("subtypes")
-    val subTypes: List<String>? = null,
-
-    @SerialName("rarity")
-    val rarity: String,
-
-    @SerialName("set")
-    val set: String,
-
-    @SerialName("setName")
-    val setName: String,
-
-    @SerialName("text")
-    val text: String? = null,
-
-    @SerialName("artist")
-    val artist: String,
-
-    @SerialName("number")
-    val number: String? = null,
-
-    @SerialName("power")
-    val power: String? = null,
-
-    @SerialName("toughness")
-    val toughness: String? = null,
-
-    @SerialName("imageUrl")
-    val imageUrl: String? = null,
-
-    @SerialName("layout")
-    val layout: String,
-
-    @SerialName("rulings")
-    val rulings: List<RulingResponse>? = null
-)
-
-@Serializable
-data class RulingResponse(
-    @SerialName("date")
-    val date: String,
-
-    @SerialName("text")
-    val text: String
-)
-
-
-fun CardResponse.toDomain(): Card {
-    return Card(
-        id = id,
-        name = name,
-        names = names ?: emptyList(),
-        manaCost = manaCost ?: "",
-        cmc = cmc,
-        colors = colors,
-        colorIdentity = colorIdentity,
-        type = type,
-        types = types,
-        rarity = rarity,
-        set = set,
-        text = text ?: "",
-        artist = artist ?: "",
-        number = number ?: "",
-        power = power ?: "",
-        toughness = toughness ?: "",
-        layout = layout,
-        imageUrl = imageUrl ?: "",
-        rulings = rulings?.map { it.toDomain() } ?: emptyList()
+        @SerialName("imageUrl")
+        val imageUrl: String? = null,
     )
 }
 
-fun RulingResponse.toDomain(): Ruling {
-    return Ruling(
-        date = date,
-        text = text
-    )
-}
+fun CardsResponse.CardResponse.toDomain() = Card(
+    id = id,
+    name = name,
+    manaCost = manaCost ?: "",
+    type = type,
+    rarity = rarity,
+    set = set,
+    text = text ?: "",
+    number = number ?: "",
+    power = power ?: "",
+    toughness = toughness ?: "",
+    imageUrl = imageUrl ?: ""
+)

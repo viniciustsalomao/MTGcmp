@@ -6,9 +6,18 @@ import kotlin.test.Test
 class CardsApiTest {
 
     @Test
-    fun testApi() {
+    fun testCardsApi() {
         runTest {
             val response = cardsApi.getCards()
+
+            println(response)
+        }
+    }
+
+    @Test
+    fun testCardDetailsApi() {
+        runTest {
+            val response = cardsApi.getCardDetails(id = "386616")
 
             println(response)
         }
