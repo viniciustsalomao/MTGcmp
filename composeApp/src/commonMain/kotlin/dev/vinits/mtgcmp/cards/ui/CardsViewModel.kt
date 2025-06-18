@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.vinits.mtgcmp.cards.domain.model.CardColorFilter
 import dev.vinits.mtgcmp.cards.domain.model.CardTypeFilter
+import dev.vinits.mtgcmp.cards.domain.model.Filter
 import dev.vinits.mtgcmp.cards.domain.repository.CardRepository
 import dev.vinits.mtgcmp.foundation.model.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,11 +12,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-
-data class Filter(
-    val colorFilter: CardColorFilter?,
-    val typeFilter: CardTypeFilter?,
-)
 
 class CardsViewModel(
     private val repository: CardRepository,

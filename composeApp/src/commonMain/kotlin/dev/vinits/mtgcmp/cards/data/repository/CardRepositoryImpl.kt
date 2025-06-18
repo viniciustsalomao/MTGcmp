@@ -1,7 +1,6 @@
 package dev.vinits.mtgcmp.cards.data.repository
 
 import dev.vinits.mtgcmp.cards.data.network.CardsApi
-import dev.vinits.mtgcmp.cards.data.network.cardsApi
 import dev.vinits.mtgcmp.cards.data.network.toDomain
 import dev.vinits.mtgcmp.cards.domain.model.Card
 import dev.vinits.mtgcmp.cards.domain.model.CardColorFilter
