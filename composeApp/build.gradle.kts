@@ -51,6 +51,17 @@ kotlin {
             implementation(libs.ktor.client.contentNegotiation)
             implementation(libs.ktor.serialization)
             implementation(libs.kotlinx.serialization)
+
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.navigation)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.core)
+
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
+            implementation(libs.navigation.compose)
+            implementation(libs.composeIcons.tablerIcons)
         }
 
         commonTest.dependencies {
