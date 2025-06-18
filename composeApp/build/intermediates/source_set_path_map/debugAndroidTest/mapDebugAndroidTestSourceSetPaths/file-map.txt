@@ -1,4 +1,0 @@
-dev.vinits.mtgcmp.test.composeApp-androidTest-0 /Users/viniciussalomao/Documents/PROJETOS/estudoKMP/MTG-cmp-tutorial/composeApp/build/generated/res/resValues/androidTest/debug
-dev.vinits.mtgcmp.test.composeApp-mergeDebugAndroidTestResources-1 /Users/viniciussalomao/Documents/PROJETOS/estudoKMP/MTG-cmp-tutorial/composeApp/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
-dev.vinits.mtgcmp.test.composeApp-mergeDebugAndroidTestResources-2 /Users/viniciussalomao/Documents/PROJETOS/estudoKMP/MTG-cmp-tutorial/composeApp/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
-dev.vinits.mtgcmp.test.composeApp-debugAndroidTest-3 /Users/viniciussalomao/Documents/PROJETOS/estudoKMP/MTG-cmp-tutorial/composeApp/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources
