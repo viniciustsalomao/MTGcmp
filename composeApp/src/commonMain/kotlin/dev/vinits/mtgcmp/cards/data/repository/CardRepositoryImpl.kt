@@ -4,7 +4,9 @@ import dev.vinits.mtgcmp.cards.data.network.CardsApi
 import dev.vinits.mtgcmp.cards.data.network.cardsApi
 import dev.vinits.mtgcmp.cards.data.network.toDomain
 import dev.vinits.mtgcmp.cards.domain.model.Card
+import dev.vinits.mtgcmp.cards.domain.model.CardColorFilter
 import dev.vinits.mtgcmp.cards.domain.model.CardDetails
+import dev.vinits.mtgcmp.cards.domain.model.CardTypeFilter
 import dev.vinits.mtgcmp.cards.domain.repository.CardRepository
 import dev.vinits.mtgcmp.foundation.model.Resource
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +15,10 @@ import kotlinx.coroutines.flow.flow
 class CardRepositoryImpl(
     private val api: CardsApi
 ) : CardRepository {
-    override fun getCards(): Flow<Resource<List<Card>>> = flow {
+    override fun getCards(
+        colorFilter: CardColorFilter?,
+        typeFilter: CardTypeFilter?,
+    ): Flow<Resource<List<Card>>> = flow {
         emit(Resource.Loading)
 
         try {

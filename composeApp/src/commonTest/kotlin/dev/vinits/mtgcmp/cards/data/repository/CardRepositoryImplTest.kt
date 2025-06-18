@@ -53,7 +53,10 @@ class CardRepositoryImplTest {
         )
 
         runTest {
-            repository.getCards().test {
+            repository.getCards(
+                colorFilter = null,
+                typeFilter = null
+            ).test {
                 assertEquals(
                     expected = Resource.Loading,
                     actual = awaitItem()
@@ -77,7 +80,10 @@ class CardRepositoryImplTest {
         api.shouldFailNextCardsRequest()
 
         runTest {
-            repository.getCards().test {
+            repository.getCards(
+                colorFilter = null,
+                typeFilter = null
+            ).test {
                 assertEquals(
                     expected = Resource.Loading,
                     actual = awaitItem()
