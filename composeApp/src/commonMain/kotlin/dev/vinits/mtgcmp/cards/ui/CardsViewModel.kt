@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dev.vinits.mtgcmp.cards.domain.model.CardColorFilter
 import dev.vinits.mtgcmp.cards.domain.model.CardType
 import dev.vinits.mtgcmp.cards.domain.model.Filter
+import dev.vinits.mtgcmp.cards.domain.model.ManaType
 import dev.vinits.mtgcmp.cards.domain.repository.CardRepository
 import dev.vinits.mtgcmp.foundation.model.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +37,7 @@ class CardsViewModel(
     )
 
     fun onFilterSubmit(
-        colorFilter: CardColorFilter?,
+        colorFilter: List<ManaType>?,
         typeFilter: CardType?,
     ) {
         filter.update {

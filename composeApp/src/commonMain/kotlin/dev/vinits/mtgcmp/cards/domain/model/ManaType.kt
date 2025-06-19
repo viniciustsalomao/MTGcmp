@@ -12,6 +12,10 @@ sealed class ManaType(open val value: String) {
     data class Hybrid(val left: String, val right: String) : ManaType("{$left/$right}")
 }
 
+fun List<ManaType>.toManaString(): String {
+    return joinToString(",") { it.value }
+}
+
 /* manaCost guide:
     - {G} = green
     - {R} = red
