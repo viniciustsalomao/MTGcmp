@@ -1,5 +1,6 @@
 package dev.vinits.mtgcmp.cards.ui
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -34,11 +37,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
 import dev.vinits.mtgcmp.cards.domain.model.CardSimple
 import dev.vinits.mtgcmp.cards.domain.model.CardType
 import dev.vinits.mtgcmp.cards.domain.model.ManaType
@@ -71,30 +76,55 @@ fun CardsScreen(
             )
         }
     ) { contentPadding ->
-        when (val uiState = uiState) {
-            Resource.Loading -> Box(Modifier)
-            Resource.Error -> Box(Modifier)
-            is Resource.Success<List<CardSimple>> -> {
-                LazyColumn(
-                    modifier = Modifier.padding(contentPadding),
-                    verticalArrangement = Arrangement.spacedBy(24.dp),
-                    contentPadding = PaddingValues(horizontal = 24.dp)
-                ) {
-                    items(uiState.data) { card ->
-                        CardRow(
-                            cardSimple = card,
-                            onClick = {
-                                if (card.id != null) {
-                                    // TODO: Refatorar para caso o id seja null, enviar o nome
-                                    onNavigateToDetails(card.id)
+        AnimatedContent(
+            targetState = uiState
+        ) { targetState ->
+            when (targetState) {
+                Resource.Loading -> LoadingIndicator()
+
+                Resource.Error -> Box(Modifier)
+                is Resource.Success<List<CardSimple>> -> {
+                    LazyColumn(
+                        modifier = Modifier.padding(contentPadding),
+                        verticalArrangement = Arrangement.spacedBy(24.dp),
+                        contentPadding = PaddingValues(horizontal = 24.dp)
+                    ) {
+                        items(targetState.data) { card ->
+                            CardRow(
+                                cardSimple = card,
+                                onClick = {
+                                    if (card.id != null) {
+                                        // TODO: Refatorar para caso o id seja null, enviar o nome
+                                        onNavigateToDetails(card.id)
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        }
                     }
                 }
             }
         }
 
+    }
+}
+
+@Composable
+fun LoadingIndicator() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.width(64.dp),
+                color = MaterialTheme.colorScheme.primary,
+                trackColor = MaterialTheme.colorScheme.surface,
+            )
+        }
     }
 }
 
@@ -120,14 +150,18 @@ fun CardRow(
 
             // TODO: Entender pq a imagem não aparece
             AsyncImage(
-                model = cardSimple.imageUrl,
+                model = if (LocalInspectionMode.current) {
+                    cardSimple.imageUrl
+                } else {
+
+                },
                 contentDescription = cardSimple.name,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxHeight().width(34.dp)
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier.fillMaxHeight().width(34.dp).padding(16.dp),
             )
 
             Column(
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(16.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -135,7 +169,7 @@ fun CardRow(
                 ) {
                     Text(
                         text = cardSimple.name,
-                        style = MaterialTheme.typography.titleSmall.copy(
+                        style = MaterialTheme.typography.titleMedium.copy(
                             color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.SemiBold,
                         )
@@ -167,7 +201,8 @@ fun CardRow(
                                 .padding(horizontal = 6.dp, vertical = 2.dp)
                         ) {
                             Text(
-                                text = cardSimple.loyalty ?: "${cardSimple.power}/${cardSimple.toughness}",
+                                text = cardSimple.loyalty
+                                    ?: "${cardSimple.power}/${cardSimple.toughness}",
                                 style = MaterialTheme.typography.titleSmall.copy(
                                     color = Color.White,
                                     fontWeight = FontWeight.Bold
