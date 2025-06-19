@@ -1,6 +1,6 @@
 package dev.vinits.mtgcmp.cards.data.network
 
-import dev.vinits.mtgcmp.cards.domain.model.Card
+import dev.vinits.mtgcmp.cards.domain.model.CardSimple
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -18,7 +18,7 @@ data class CardsResponse(
         val name: String,
 
         @SerialName("manaCost")
-        val manaCost: String,
+        val manaCost: String?,
 
         @SerialName("type")
         val type: String,
@@ -43,19 +43,23 @@ data class CardsResponse(
 
         @SerialName("imageUrl")
         val imageUrl: String? = null,
+
+        @SerialName("loyalty")
+        val loyalty: String? = null,
     )
 }
 
-fun CardsResponse.CardResponse.toDomain() = Card(
+fun CardsResponse.CardResponse.toDomain() = CardSimple(
     id = id,
     name = name,
-    manaCost = manaCost ?: "",
+    manaCost = manaCost,
     type = type,
     rarity = rarity,
     set = set,
-    text = text ?: "",
-    number = number ?: "",
-    power = power ?: "",
-    toughness = toughness ?: "",
-    imageUrl = imageUrl ?: ""
+    text = text,
+    number = number,
+    power = power,
+    toughness = toughness,
+    imageUrl = imageUrl,
+    loyalty = loyalty
 )

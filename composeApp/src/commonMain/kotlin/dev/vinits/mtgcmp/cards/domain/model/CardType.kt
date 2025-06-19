@@ -1,6 +1,6 @@
 package dev.vinits.mtgcmp.cards.domain.model
 
-enum class CardTypeFilter(
+enum class CardType(
     private val value: String,
 ) {
     ARTIFACT("Artifact"),

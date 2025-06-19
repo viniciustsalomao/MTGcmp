@@ -1,16 +1,15 @@
 package dev.vinits.mtgcmp.cards.data.repository
 
-import androidx.compose.material3.Card
 import app.cash.turbine.test
 import dev.vinits.mtgcmp.cards.data.network.CardsResponse
 import dev.vinits.mtgcmp.cards.data.repository.fake.FakeCardsApi
-import dev.vinits.mtgcmp.cards.domain.model.Card
+import dev.vinits.mtgcmp.cards.domain.model.CardSimple
 import dev.vinits.mtgcmp.foundation.model.Resource
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class CardRepositoryImplTest {
+class CardSimpleRepositoryImplTest {
 
     private val cardsResponse = CardsResponse(
         cards = listOf(
@@ -36,8 +35,8 @@ class CardRepositoryImplTest {
         val api = FakeCardsApi(cardsResponse = cardsResponse)
         val repository = CardRepositoryImpl(api = api)
 
-        val expectedCards = listOf(
-            Card(
+        val expectedCardSimples = listOf(
+            CardSimple(
                 id = "",
                 name = "",
                 manaCost = "",
@@ -63,7 +62,7 @@ class CardRepositoryImplTest {
                 )
 
                 assertEquals(
-                    expected = Resource.Success(data = expectedCards),
+                    expected = Resource.Success(data = expectedCardSimples),
                     actual = awaitItem()
                 )
 

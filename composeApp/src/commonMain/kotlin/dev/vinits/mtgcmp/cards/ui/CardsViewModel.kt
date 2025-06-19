@@ -3,7 +3,7 @@ package dev.vinits.mtgcmp.cards.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.vinits.mtgcmp.cards.domain.model.CardColorFilter
-import dev.vinits.mtgcmp.cards.domain.model.CardTypeFilter
+import dev.vinits.mtgcmp.cards.domain.model.CardType
 import dev.vinits.mtgcmp.cards.domain.model.Filter
 import dev.vinits.mtgcmp.cards.domain.repository.CardRepository
 import dev.vinits.mtgcmp.foundation.model.Resource
@@ -37,7 +37,7 @@ class CardsViewModel(
 
     fun onFilterSubmit(
         colorFilter: CardColorFilter?,
-        typeFilter: CardTypeFilter?,
+        typeFilter: CardType?,
     ) {
         filter.update {
             it.copy(
@@ -46,5 +46,4 @@ class CardsViewModel(
             )
         }
     }
-
 }

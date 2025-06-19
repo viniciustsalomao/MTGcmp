@@ -9,5 +9,5 @@ sealed interface Routes {
 
 
     @Serializable
-    data class CardDetails(val id: Int): Routes
+    data class CardDetails(val id: String): Routes
 }
