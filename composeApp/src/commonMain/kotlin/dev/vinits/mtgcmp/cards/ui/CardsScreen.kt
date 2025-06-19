@@ -37,13 +37,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
 import dev.vinits.mtgcmp.cards.domain.model.CardSimple
 import dev.vinits.mtgcmp.cards.domain.model.CardType
 import dev.vinits.mtgcmp.cards.domain.model.ManaType
@@ -150,13 +148,9 @@ fun CardRow(
 
             // TODO: Entender pq a imagem não aparece
             AsyncImage(
-                model = if (LocalInspectionMode.current) {
-                    cardSimple.imageUrl
-                } else {
-
-                },
+                model = cardSimple.imageUrl,
                 contentDescription = cardSimple.name,
-                contentScale = ContentScale.FillWidth,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier.fillMaxHeight().width(34.dp).padding(16.dp),
             )
 
