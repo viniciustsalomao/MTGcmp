@@ -10,6 +10,7 @@ interface CardsApi {
 
     @GET("cards")
     suspend fun getCards(
+        @Query("name") nameFilter: String?,
         @Query("colors") colorFilter: String?,
         @Query("type") typeFilter: String?,
     ): CardsResponse

@@ -5,6 +5,7 @@ import dev.vinits.mtgcmp.cards.data.network.toDomain
 import dev.vinits.mtgcmp.cards.domain.model.CardSimple
 import dev.vinits.mtgcmp.cards.domain.model.CardDetails
 import dev.vinits.mtgcmp.cards.domain.model.CardType
+import dev.vinits.mtgcmp.cards.domain.model.Filter
 import dev.vinits.mtgcmp.cards.domain.model.ManaType
 import dev.vinits.mtgcmp.cards.domain.model.toManaString
 import dev.vinits.mtgcmp.cards.domain.repository.CardRepository
@@ -16,6 +17,7 @@ class CardRepositoryImpl(
     private val api: CardsApi
 ) : CardRepository {
     override fun getCards(
+        nameFilter: String?,
         colorFilter: List<ManaType>?,
         typeFilter: CardType?,
     ): Flow<Resource<List<CardSimple>>> = flow {
@@ -23,6 +25,7 @@ class CardRepositoryImpl(
 
         try {
             val response = api.getCards(
+                nameFilter = nameFilter,
                 colorFilter = colorFilter?.toManaString().orEmpty(),
                 typeFilter = typeFilter?.toString().orEmpty()
             )

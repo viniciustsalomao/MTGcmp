@@ -2,7 +2,6 @@ package dev.vinits.mtgcmp.cards.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.vinits.mtgcmp.cards.domain.model.CardColorFilter
 import dev.vinits.mtgcmp.cards.domain.model.CardType
 import dev.vinits.mtgcmp.cards.domain.model.Filter
 import dev.vinits.mtgcmp.cards.domain.model.ManaType
@@ -20,13 +19,15 @@ class CardsViewModel(
 
     private val filter = MutableStateFlow(
         Filter(
+            nameFilter = null,
             colorFilter = null,
             typeFilter = null,
-        )
+        ),
     )
 
     val uiState = filter.flatMapLatest { filter ->
         repository.getCards(
+            nameFilter = filter.nameFilter,
             colorFilter = filter.colorFilter,
             typeFilter = filter.typeFilter,
         )
@@ -37,11 +38,13 @@ class CardsViewModel(
     )
 
     fun onFilterSubmit(
+        nameFilter: String?,
         colorFilter: List<ManaType>?,
         typeFilter: CardType?,
     ) {
         filter.update {
             it.copy(
+                nameFilter,
                 colorFilter,
                 typeFilter
             )

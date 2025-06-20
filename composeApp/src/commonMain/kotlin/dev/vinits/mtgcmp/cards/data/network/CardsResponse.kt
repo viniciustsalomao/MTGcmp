@@ -18,7 +18,7 @@ data class CardsResponse(
         val name: String,
 
         @SerialName("manaCost")
-        val manaCost: String?,
+        val manaCost: String? = null,
 
         @SerialName("type")
         val type: String,

@@ -122,6 +122,7 @@ fun CardsScreen(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
                         viewModel.onFilterSubmit(
+                            null,
                             colorFilter = colorFilter,
                             typeFilter = typeFilter
                         )
@@ -160,7 +161,23 @@ fun CardsScreen(
 
                 TextField(
                     value = text,
-                    onValueChange = { text = it },
+                    onValueChange = {
+                        text = it
+                        // TODO: entender qual seria a melhor forma de fazer o filtro por nome
+                        if (it.length >= 3) {
+                            viewModel.onFilterSubmit(
+                                nameFilter = it,
+                                colorFilter = null,
+                                typeFilter = null,
+                            )
+                        } else {
+                            viewModel.onFilterSubmit(
+                                nameFilter = null,
+                                colorFilter = null,
+                                typeFilter = null,
+                            )
+                        }
+                    },
                     label = { Text("search") },
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
                 )
