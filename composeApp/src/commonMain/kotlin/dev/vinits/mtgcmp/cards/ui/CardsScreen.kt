@@ -74,6 +74,7 @@ fun CardsScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     //region Filters BS
+    // TODO: entender como fazer para guardar a ultima busca quando abrir
     var openBottomSheet by remember { mutableStateOf(false) }
     if (openBottomSheet) {
         ModalBottomSheet(
@@ -393,20 +394,22 @@ fun CardRow(
         onClick = onClick,
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            modifier = Modifier.fillMaxWidth().padding(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // TODO: Entender pq a imagem não aparece
+            // TODO: Entender pq a imagem não aparece, aparentemente é pelo formato que a url é enviada, quando cola no navegador redireciona e funciona
             AsyncImage(
-                model = cardSimple.imageUrl,
+//                model = cardSimple.imageUrl,
+                model = "https://gatherer-static.wizards.com/Cards/medium/65EF1CB838E774ADB8BCC60F9A23E5DA49583DBB3574D5E3337AA0C0E9DFE6D0.webp",
                 contentDescription = cardSimple.name,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxHeight().width(34.dp).padding(16.dp),
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier.fillMaxHeight().width(48.dp).padding(4.dp),
             )
 
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(horizontal = 4.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
