@@ -26,9 +26,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -40,6 +43,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +59,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import dev.vinits.mtgcmp.cards.domain.model.CardColorFilter
 import dev.vinits.mtgcmp.cards.domain.model.CardSimple
+import dev.vinits.mtgcmp.cards.domain.model.CardType
 import dev.vinits.mtgcmp.cards.domain.model.ManaType
 import dev.vinits.mtgcmp.cards.domain.model.toManaType
 import dev.vinits.mtgcmp.foundation.model.Resource
@@ -68,6 +73,7 @@ fun CardsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    //region Filters BS
     var openBottomSheet by remember { mutableStateOf(false) }
     if (openBottomSheet) {
         ModalBottomSheet(
@@ -96,12 +102,28 @@ fun CardsScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                Text(
+                    text = "Type:",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                )
+
+                var typeFilter: CardType? = null
+
+                TypeFilterRow { newSelection ->
+                    typeFilter = newSelection
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 Button(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
                         viewModel.onFilterSubmit(
                             colorFilter = colorFilter,
-                            typeFilter = null
+                            typeFilter = typeFilter
                         )
                         openBottomSheet = false
                     }) {
@@ -110,7 +132,10 @@ fun CardsScreen(
             }
         }
     }
+    //endregion
 
+
+    //region Body
     Scaffold(
         topBar = {
             Column(
@@ -185,6 +210,7 @@ fun CardsScreen(
         }
 
     }
+    //endregion
 }
 
 @Composable
@@ -194,15 +220,15 @@ fun ManaFilterRow(
     val selectedEnums = remember { mutableStateListOf<CardColorFilter>() }
 
     FlowRow(
-        modifier = Modifier.padding(8.dp).fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
     ) {
         CardColorFilter.entries.forEach { mana ->
             val isSelected = mana in selectedEnums
 
             FilterChip(
-                modifier = Modifier,
-                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.padding(4.dp),
+                shape = RoundedCornerShape(18.dp),
                 selected = isSelected,
                 onClick = {
                     if (isSelected) {
@@ -215,19 +241,67 @@ fun ManaFilterRow(
                 },
                 label = {
                     Text(
-                        text = mana.label,
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.SemiBold,
+                        text = mana.label.lowercase(),
+                        style = MaterialTheme.typography.titleSmall.copy(
+                            fontWeight = FontWeight.Normal,
                         )
                     )
                 },
                 colors = FilterChipDefaults.filterChipColors(
                     selectedContainerColor = mana.color,
-                    selectedLabelColor = Color.White,
-                    containerColor = mana.color.copy(alpha = 0.3f),
+                    selectedLabelColor = Color.Black,
+                    containerColor = mana.color.copy(alpha = 0.5f),
                     labelColor = Color.White
                 )
             )
+        }
+    }
+}
+
+@Composable
+fun TypeFilterRow(
+    onSelectionChanged: (CardType) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+
+        var buttonTitle by rememberSaveable { mutableStateOf("Select type") }
+
+        InputChip(
+            modifier = Modifier.padding(horizontal = 4.dp).fillMaxWidth(),
+            shape = RoundedCornerShape(18.dp),
+            onClick = {
+                expanded = !expanded
+            },
+            label = {
+                Text(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    text = buttonTitle,
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        fontWeight = FontWeight.Normal,
+                    )
+                )
+            },
+            selected = expanded
+        )
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            CardType.entries.forEach { type ->
+                DropdownMenuItem(
+                    text = { Text(type.name.lowercase()) },
+                    onClick = {
+                        expanded = !expanded
+                        buttonTitle = type.name.lowercase()
+                        onSelectionChanged(type)
+                    }
+                )
+            }
         }
     }
 }
@@ -400,13 +474,13 @@ fun ManaCostRow(
 @Composable
 fun ManaCircle(mana: ManaType) {
     val manaColorMap = mapOf(
-        "R" to Color(0xFFDD3B2D),
-        "U" to Color(0xFF1E86C7),
-        "G" to Color(0xFF2E8B57),
-        "B" to Color(0xFF1C1C1C),
-        "W" to Color(0xFFFFFFFF),
-        "C" to Color.Gray,
-        "P" to Color(0xFFCE00CE)
+        "R" to Color(0xFFeba083),
+        "U" to Color(0xFFb0cbe6),
+        "G" to Color(0xFFbcd8c3),
+        "B" to Color(0xFFa89f9e),
+        "W" to Color(0xFFf5e6b7),
+        "C" to Color(0xFFcac8bb),
+        "P" to Color(0xFF5a7892)
     )
 
     val (bgModifier, text) = when (mana) {

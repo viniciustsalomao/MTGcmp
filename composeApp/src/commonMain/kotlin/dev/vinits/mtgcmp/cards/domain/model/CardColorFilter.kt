@@ -5,11 +5,11 @@ import androidx.compose.ui.graphics.Color
 enum class CardColorFilter(
     val label: String, val color: Color
 ) {
-    RED("Red", Color(0xFFDD2C00)),
-    BLUE("Blue", Color(0xFF2962FF)),
-    GREEN("Green", Color(0xFF00C853)),
-    BLACK("Black", Color(0xFF212121)),
-    WHITE("White", Color(0xFFFFF9C4)),
+    RED("Red", Color(0xFFeba083)),
+    BLUE("Blue", Color(0xFFb0cbe6)),
+    GREEN("Green", Color(0xFFbcd8c3)),
+    BLACK("Black", Color(0xFFa89f9e)),
+    WHITE("White", Color(0xFFf5e6b7)),
 }
 
 fun CardColorFilter.toManaType(genericValue: String = "1"): ManaType {
