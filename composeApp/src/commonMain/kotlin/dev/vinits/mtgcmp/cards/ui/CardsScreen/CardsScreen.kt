@@ -1,4 +1,4 @@
-package dev.vinits.mtgcmp.cards.ui
+package dev.vinits.mtgcmp.cards.ui.CardsScreen
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background

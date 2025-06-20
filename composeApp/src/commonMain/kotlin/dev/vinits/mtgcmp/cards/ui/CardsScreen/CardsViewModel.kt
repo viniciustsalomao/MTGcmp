@@ -1,4 +1,4 @@
-package dev.vinits.mtgcmp.cards.ui
+package dev.vinits.mtgcmp.cards.ui.CardsScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

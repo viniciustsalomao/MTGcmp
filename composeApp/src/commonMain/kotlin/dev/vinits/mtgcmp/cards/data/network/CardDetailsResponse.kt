@@ -21,7 +21,7 @@ data class CardDetailsBaseResponse(
         val names: List<String>? = null,
 
         @SerialName("manaCost")
-        val manaCost: String,
+        val manaCost: String? = null,
 
         @SerialName("cmc")
         val cmc: Float? = null,

@@ -4,7 +4,7 @@ data class CardDetails(
     val id: String?,
     val name: String,
     val names: List<String>?,
-    val manaCost: String,
+    val manaCost: String? = null,
     val cmc: Float?,
     val colors: List<String>?,
     val colorIdentity: List<String>?,

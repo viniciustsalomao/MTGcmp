@@ -1,9 +1,8 @@
 package dev.vinits.mtgcmp.cards.di
 
-import dev.vinits.mtgcmp.cards.data.network.CardsResponse
 import dev.vinits.mtgcmp.cards.data.repository.CardRepositoryImpl
 import dev.vinits.mtgcmp.cards.domain.repository.CardRepository
-import dev.vinits.mtgcmp.cards.ui.CardsViewModel
+import dev.vinits.mtgcmp.cards.ui.CardsScreen.CardsViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
